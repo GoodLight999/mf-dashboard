@@ -1,6 +1,7 @@
 import type { Page } from "playwright";
 import { updateTransactionCategory } from "../hooks/helpers.js";
 import { warn as defaultWarn } from "../logger.js";
+import { assertMfWritesEnabled } from "@mf-dashboard/meta/writes";
 import type { ResolvedCategoryDecision } from "./types.js";
 
 type TransactionCategoryUpdater = typeof updateTransactionCategory;
@@ -21,6 +22,8 @@ export interface ApplyCategoryDecisionsResult {
 export async function applyCategoryDecisions(
   options: ApplyCategoryDecisionsOptions,
 ): Promise<ApplyCategoryDecisionsResult> {
+  // [fork] 書き込み系は既定で無効。MF_ENABLE_WRITES=1 の時だけMFへ反映する。
+  assertMfWritesEnabled("applyCategoryDecisions");
   const updater = options.updater ?? updateTransactionCategory;
   const warn = options.warn ?? defaultWarn;
   const appliedDecisions: ResolvedCategoryDecision[] = [];

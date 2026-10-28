@@ -5,7 +5,11 @@ import { createOpenAI } from "@ai-sdk/openai";
 type Provider = "openai" | "anthropic" | "google";
 
 const providers: Record<Provider, () => ReturnType<typeof createOpenAI>> = {
-  openai: () => createOpenAI({ apiKey: process.env.AI_API_KEY }),
+  openai: () =>
+    createOpenAI({
+      apiKey: process.env.AI_API_KEY,
+      baseURL: process.env.AI_BASE_URL || undefined,
+    }),
   anthropic: () =>
     createAnthropic({ apiKey: process.env.AI_API_KEY }) as unknown as ReturnType<
       typeof createOpenAI

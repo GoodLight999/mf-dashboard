@@ -1,5 +1,12 @@
-const BASE_URL = "https://moneyforward.com";
-const ID_BASE_URL = "https://id.moneyforward.com";
+// [fork] 接続先ホストを設定可能に（既定は上流と同一の moneyforward.com）。
+// MF_BASE_HOST    : ME本体のホスト (例: moneyforward.com / mizuho.x.moneyforward.com)
+// MF_ID_BASE_HOST : MFIDログインのホスト (未指定時は id.<MF_BASE_HOST>)
+const forkEnv =
+  (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env ?? {};
+const MF_BASE_HOST = forkEnv.MF_BASE_HOST || "moneyforward.com";
+const ID_BASE_HOST = forkEnv.MF_ID_BASE_HOST || `id.${MF_BASE_HOST}`;
+const BASE_URL = `https://${MF_BASE_HOST}`;
+const ID_BASE_URL = `https://${ID_BASE_HOST}`;
 
 export const mfUrls = {
   /** トップページ */

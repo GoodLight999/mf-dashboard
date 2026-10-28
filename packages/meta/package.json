@@ -6,6 +6,7 @@
   "exports": {
     "./categories": "./src/categories.ts",
     "./urls": "./src/urls.ts",
+    "./writes": "./src/writes.ts",
     "./groups": "./src/groups.ts"
   },
   "scripts": {
