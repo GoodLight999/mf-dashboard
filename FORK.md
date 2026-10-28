@@ -16,6 +16,7 @@ URLは `packages/meta/src/urls.ts` の1ファイルに集約されているた�
 ## 運用（このリポジトリ外・/root/ops/moneyforward/）
 
 - `bin/upstream-sync.sh` — 週次cronが `git fetch upstream` → 差分通知（Telegram）→ `--merge`で `merge --no-ff` + push。コンフリクト時は中断して通知。
+- 週次cronは登録済み: hermes cronjob `mf-fork-upstream-sync`（id `846bd32fb13a`、毎週月 09:00 JST、no_agent・LLMなし）。2026-10-28 に `--check-only` 実行実測（差分なし・exit 0）。
 - `bin/run-mf.sh <label> <cmd...>` — クロール実行ラッパー。**2回連続失敗でTelegram通知**（12時間スロットル）。TSUKUMO側のクロールcronはこれ経由で呼ぶ。
 - `bin/mf-notify.sh` — Telegram通知（`hermes -p default send` 経由・トークンは置かない）。
 
